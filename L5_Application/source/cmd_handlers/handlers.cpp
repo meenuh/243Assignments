@@ -45,6 +45,22 @@
 #include "c_tlm_stream.h"
 #include "c_tlm_var.h"
 
+#include "printf_lib.h"
+
+CMD_HANDLER_FUNC(sayHelloHandler)
+{
+	scheduler_task *task = scheduler_task::getTaskPtrByName("sayHi");
+
+	if(cmdParams == "hi")
+	{
+		vTaskResume(task->getTaskHandle());
+	}else{
+		LD.setNumber(TS.getFarenheit());
+		vTaskSuspend(task->getTaskHandle());
+	}
+
+	return true;
+}
 
 
 CMD_HANDLER_FUNC(taskListHandler)
